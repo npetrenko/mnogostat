@@ -1,0 +1,2421 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt,mathletters]{article}
+
+    \usepackage{ucs}
+    \usepackage[utf8x]{inputenc}
+    \usepackage[russian]{babel} 
+    % Nicer default font than Computer Modern for most use cases
+    \usepackage{palatino}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{mnogostat\_1}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np} 
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{from} \PY{n+nn}{rpy2} \PY{k}{import} \PY{n}{robjects} \PY{k}{as} \PY{n}{ro}
+        \PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{rpy} \PY{k}{import} \PY{n}{common} \PY{k}{as} \PY{n}{com}
+        \PY{k+kn}{import} \PY{n+nn}{re}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+//anaconda/envs/py3.5/lib/python3.5/site-packages/ipykernel/\_\_main\_\_.py:4: FutureWarning: The pandas.rpy module is deprecated and will be removed in a future version. We refer to external packages like rpy2. 
+See here for a guide on how to port your code to rpy2: http://pandas.pydata.org/pandas-docs/stable/r\_interface.html
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{ro}\PY{o}{.}\PY{n}{r}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}\PYZsq{}\PYZsq{}}\PY{l+s+s1}{library(}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{ppcor}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}\PYZsq{}\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+//anaconda/envs/py3.5/lib/python3.5/site-packages/rpy2/rinterface/\_\_init\_\_.py:186: RRuntimeWarning: Loading required package: MASS
+
+  warnings.warn(x, RRuntimeWarning)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}excel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{../Downloads/airlines.(1).xlsx}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} [(0, 'Авиакомпания'),
+         (1, 'Год основания авиакомпании'),
+         (2, 'Время существования авиакомпании (лет)'),
+         (3, 'Страна         (развитая - 1, развивающаяся - 0)'),
+         (4, 'Unnamed: 4'),
+         (5, 'Кол-во воздушных судов, шт. '),
+         (6, 'Количество направлений (регулярных рейсов)'),
+         (7, 'Пассажиро-оборот, млн. пасс-км'),
+         (8, 'Кол-во пассажиров, млн. чел. '),
+         (9, 'Грузоперевозки, млн.т-км'),
+         (10, 'Альянс               (да - 1, нет - 0)'),
+         (11, 'Unnamed: 11'),
+         (12, 'Лет без катастроф (с 1973 г.)'),
+         (13, 'Жертвы авиакатастроф (с 1973 г.)'),
+         (14, 'Работники (тыс. чел)'),
+         (15, 'Выручка (млрд. долл)'),
+         (16, 'Издержки (млрд. долл)')]
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{col} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+        \PY{n}{col}\PY{p}{[}\PY{l+m+mi}{10}\PY{p}{]} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Альянс}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{col}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Страна}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{col}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Развитая}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{data}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{n}{col}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{airlines} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{Авиакомпания}
+        \PY{n}{data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Авиакомпания}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unnamed: 11}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{dummy\PYZus{}na} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,} \PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{p}{,}
+                              \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Страна}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                                       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Альянс}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:}   Год основания авиакомпании Время существования авиакомпании (лет) Развитая  \textbackslash{}
+        0                          Y                                   Year       Co   
+        1                       1928                                     82        1   
+        2                       1933                                     77        1   
+        3                       1934                                     76        1   
+        4                       1931                                     79        1   
+        
+          Кол-во воздушных судов, шт.  Количество направлений (регулярных рейсов)  \textbackslash{}
+        0                            B                                        Dir   
+        1                          729                                        355   
+        2                          367                                        238   
+        3                          614                                        250   
+        4                          360                                        230   
+        
+          Пассажиро-оборот, млн. пасс-км Кол-во пассажиров, млн. чел.   \textbackslash{}
+        0                            RPK                          Pass   
+        1                         304009                           161   
+        2                         202455                          71.4   
+        3                         196904                          85.7   
+        4                         161663                          56.1   
+        
+          Грузоперевозки, млн.т-км Лет без катастроф (с 1973 г.)  \textbackslash{}
+        0                      FTK                            YC   
+        1                      3.2                            20   
+        2                      4.9                             3   
+        3                      2.4                             7   
+        4                     2.34                             7   
+        
+          Жертвы авиакатастроф (с 1973 г.)     {\ldots}     Страна\_ЮАР Страна\_Южная Корея   \textbackslash{}
+        0                           Victim     {\ldots}              0                   0   
+        1                              236     {\ldots}              0                   0   
+        2                              116     {\ldots}              0                   0   
+        3                              895     {\ldots}              0                   0   
+        4                              257     {\ldots}              0                   0   
+        
+          Страна\_Япония  Страна\_nan  Альянс\_Alliance  Альянс\_Oneworld  Альянс\_SkyTeam  \textbackslash{}
+        0             0           0                1                0               0   
+        1             0           0                0                0               1   
+        2             0           0                0                0               1   
+        3             0           0                0                1               0   
+        4             0           0                0                0               0   
+        
+           Альянс\_Star Alliance   Альянс\_Альянс  Альянс\_nan  
+        0                      0              0           0  
+        1                      0              0           0  
+        2                      0              0           0  
+        3                      0              0           0  
+        4                      1              0           0  
+        
+        [5 rows x 49 columns]
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{ix}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{52}\PY{p}{,}\PY{p}{:}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:}   Год основания авиакомпании Время существования авиакомпании (лет) Развитая  \textbackslash{}
+         1                       1928                                     82        1   
+         2                       1933                                     77        1   
+         3                       1934                                     76        1   
+         4                       1931                                     79        1   
+         5                       1934                                     76        1   
+         
+           Кол-во воздушных судов, шт.  Количество направлений (регулярных рейсов)  \textbackslash{}
+         1                          729                                        355   
+         2                          367                                        238   
+         3                          614                                        250   
+         4                          360                                        230   
+         5                          327                                        287   
+         
+           Пассажиро-оборот, млн. пасс-км Кол-во пассажиров, млн. чел.   \textbackslash{}
+         1                         304009                           161   
+         2                         202455                          71.4   
+         3                         196904                          85.7   
+         4                         161663                          56.1   
+         5                         128437                          45.6   
+         
+           Грузоперевозки, млн.т-км Лет без катастроф (с 1973 г.)  \textbackslash{}
+         1                      3.2                            20   
+         2                      4.9                             3   
+         3                      2.4                             7   
+         4                     2.34                             7   
+         5                      1.3                            10   
+         
+           Жертвы авиакатастроф (с 1973 г.)     {\ldots}     Страна\_ЮАР Страна\_Южная Корея   \textbackslash{}
+         1                              236     {\ldots}              0                   0   
+         2                              116     {\ldots}              0                   0   
+         3                              895     {\ldots}              0                   0   
+         4                              257     {\ldots}              0                   0   
+         5                               25     {\ldots}              0                   0   
+         
+           Страна\_Япония  Страна\_nan  Альянс\_Alliance  Альянс\_Oneworld  Альянс\_SkyTeam  \textbackslash{}
+         1             0           0                0                0               1   
+         2             0           0                0                0               1   
+         3             0           0                0                1               0   
+         4             0           0                0                0               0   
+         5             0           0                0                0               0   
+         
+            Альянс\_Star Alliance   Альянс\_Альянс  Альянс\_nan  
+         1                      0              0           0  
+         2                      0              0           0  
+         3                      0              0           0  
+         4                      1              0           0  
+         5                      1              0           0  
+         
+         [5 rows x 49 columns]
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{cols} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+         \PY{n}{data}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{enumerate}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{cols}\PY{p}{,}\PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} [(0, ('Год основания авиакомпании', 'a0')),
+          (1, ('Время существования авиакомпании (лет)', 'a1')),
+          (2, ('Развитая', 'a2')),
+          (3, ('Кол-во воздушных судов, шт. ', 'a3')),
+          (4, ('Количество направлений (регулярных рейсов)', 'a4')),
+          (5, ('Пассажиро-оборот, млн. пасс-км', 'a5')),
+          (6, ('Кол-во пассажиров, млн. чел. ', 'a6')),
+          (7, ('Грузоперевозки, млн.т-км', 'a7')),
+          (8, ('Лет без катастроф (с 1973 г.)', 'a8')),
+          (9, ('Жертвы авиакатастроф (с 1973 г.)', 'a9')),
+          (10, ('Работники (тыс. чел)', 'a10')),
+          (11, ('Выручка (млрд. долл)', 'a11')),
+          (12, ('Издержки (млрд. долл)', 'a12')),
+          (13, ('Страна\_Country', 'a13')),
+          (14, ('Страна\_Австралия', 'a14')),
+          (15, ('Страна\_Бразилия', 'a15')),
+          (16, ('Страна\_Великобритания', 'a16')),
+          (17, ('Страна\_Германия', 'a17')),
+          (18, ('Страна\_Ирландия', 'a18')),
+          (19, ('Страна\_Испания', 'a19')),
+          (20, ('Страна\_Италия', 'a20')),
+          (21, ('Страна\_Канада', 'a21')),
+          (22, ('Страна\_Катар', 'a22')),
+          (23, ('Страна\_Китай', 'a23')),
+          (24, ('Страна\_Малайзия', 'a24')),
+          (25, ('Страна\_Новая Зеландия ', 'a25')),
+          (26, ('Страна\_Португалия', 'a26')),
+          (27, ('Страна\_Россия', 'a27')),
+          (28, ('Страна\_США', 'a28')),
+          (29, ('Страна\_Сауд. Аравия', 'a29')),
+          (30, ('Страна\_Сингапур', 'a30')),
+          (31, ('Страна\_Страна', 'a31')),
+          (32, ('Страна\_Таиланд', 'a32')),
+          (33, ('Страна\_Тайвань', 'a33')),
+          (34, ('Страна\_Турция', 'a34')),
+          (35, ('Страна\_Франция', 'a35')),
+          (36, ('Страна\_Чили', 'a36')),
+          (37, ('Страна\_Швейцария', 'a37')),
+          (38, ('Страна\_Швеция', 'a38')),
+          (39, ('Страна\_ЮАР', 'a39')),
+          (40, ('Страна\_Южная Корея ', 'a40')),
+          (41, ('Страна\_Япония', 'a41')),
+          (42, ('Страна\_nan', 'a42')),
+          (43, ('Альянс\_Alliance', 'a43')),
+          (44, ('Альянс\_Oneworld', 'a44')),
+          (45, ('Альянс\_SkyTeam', 'a45')),
+          (46, ('Альянс\_Star Alliance ', 'a46')),
+          (47, ('Альянс\_Альянс', 'a47')),
+          (48, ('Альянс\_nan', 'a48'))]
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{rdf} \PY{o}{=} \PY{n}{com}\PY{o}{.}\PY{n}{convert\PYZus{}to\PYZus{}r\PYZus{}dataframe}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float32}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ro}\PY{o}{.}\PY{n}{globalenv}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{rdf}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{cormat} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         \PY{n}{pearson\PYZus{}cormat\PYZus{}est} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+             \PY{n}{cormat}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{ro}\PY{o}{.}\PY{n}{r}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cor.test(data\PYZdl{}a3, data\PYZdl{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{col}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+             \PY{n}{pearson\PYZus{}cormat\PYZus{}est}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{ro}\PY{o}{.}\PY{n}{r}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cor.test(data\PYZdl{}a3, data\PYZdl{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{col}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{)\PYZdl{}estimate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n+nb}{list}\PY{p}{(}\PY{n}{cormat}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{*}\PY{l+m+mi}{80}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{cols}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{key}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{cormat}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{*}\PY{l+m+mi}{80}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+--------------------------------------------------------------------------------
+Год основания авиакомпании
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a0
+t = -2.1512, df = 50, p-value = 0.03632
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.52245833 -0.01972283
+sample estimates:
+       cor 
+-0.2910566 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Время существования авиакомпании (лет)
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a1
+t = 2.1512, df = 50, p-value = 0.03632
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.01972283 0.52245833
+sample estimates:
+      cor 
+0.2910566 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Работники (тыс. чел)
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a10
+t = 9.4164, df = 50, p-value = 1.169e-12
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.6737737 0.8804154
+sample estimates:
+      cor 
+0.7996415 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Выручка (млрд. долл)
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a11
+t = 6.06, df = 50, p-value = 1.766e-07
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.4594177 0.7843447
+sample estimates:
+      cor 
+0.6507323 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Издержки (млрд. долл)
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a12
+t = 6.0672, df = 50, p-value = 1.721e-07
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.4600331 0.7846448
+sample estimates:
+     cor 
+0.651182 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Country
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a13
+t = NA, df = 50, p-value = NA
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ NA NA
+sample estimates:
+cor 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Австралия
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a14
+t = -0.67981, df = 50, p-value = 0.4998
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3592172  0.1819540
+sample estimates:
+        cor 
+-0.09569828 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Бразилия
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a15
+t = -0.22916, df = 50, p-value = 0.8197
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3026171  0.2426535
+sample estimates:
+        cor 
+-0.03239179 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Великобритания
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a16
+t = -1.0418, df = 50, p-value = 0.3025
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.4026488  0.1324016
+sample estimates:
+       cor 
+-0.1457656 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Германия
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a17
+t = 0.10981, df = 50, p-value = 0.913
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2584683  0.2872105
+sample estimates:
+      cor 
+0.0155272 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Ирландия
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a18
+t = 0.52701, df = 50, p-value = 0.6005
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2026878  0.3403212
+sample estimates:
+       cor 
+0.07432363 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Испания
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a19
+t = -0.4133, df = 50, p-value = 0.6812
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3260579  0.2180224
+sample estimates:
+       cor 
+-0.0583496 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Развитая
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a2
+t = 2.3069, df = 50, p-value = 0.02524
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.04070609 0.53756050
+sample estimates:
+      cor 
+0.3101609 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Италия
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a20
+t = -0.22236, df = 50, p-value = 0.8249
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3017426  0.2435590
+sample estimates:
+        cor 
+-0.03143039 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Канада
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a21
+t = -0.29828, df = 50, p-value = 0.7667
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3114633  0.2334399
+sample estimates:
+        cor 
+-0.04214527 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Катар
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a22
+t = -0.63265, df = 50, p-value = 0.5298
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3534198  0.1883669
+sample estimates:
+       cor 
+-0.0891144 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Китай
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a23
+t = 0.90866, df = 50, p-value = 0.3679
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.1506852  0.3868992
+sample estimates:
+      cor 
+0.1274564 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Малайзия
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a24
+t = -0.60515, df = 50, p-value = 0.5478
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3500241  0.1921017
+sample estimates:
+       cor 
+-0.0852688 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Новая Зеландия 
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a25
+t = -0.86773, df = 50, p-value = 0.3897
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3820046  0.1562935
+sample estimates:
+      cor 
+-0.121802 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Португалия
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a26
+t = -0.80526, df = 50, p-value = 0.4245
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3744862  0.1648410
+sample estimates:
+       cor 
+-0.1131494 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Россия
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a27
+t = -1.3285, df = 50, p-value = 0.19
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.43560047  0.09293272
+sample estimates:
+       cor 
+-0.1846506 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_США
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a28
+t = 5.364, df = 50, p-value = 2.091e-06
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3969318 0.7530621
+sample estimates:
+      cor 
+0.6043655 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Сауд. Аравия
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a29
+t = -0.35867, df = 50, p-value = 0.7214
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3191466  0.2253574
+sample estimates:
+        cor 
+-0.05065839 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Кол-во воздушных судов, шт. 
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a3
+t = Inf, df = 50, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 1 1
+sample estimates:
+cor 
+  1 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Сингапур
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a30
+t = -0.42697, df = 50, p-value = 0.6712
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3277813  0.2161838
+sample estimates:
+       cor 
+-0.0602724 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Страна
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a31
+t = NA, df = 50, p-value = NA
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ NA NA
+sample estimates:
+cor 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Таиланд
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a32
+t = -0.56394, df = 50, p-value = 0.5753
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3449175  0.1976889
+sample estimates:
+       cor 
+-0.0795004 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Тайвань
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a33
+t = -1.1227, df = 50, p-value = 0.2669
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.4120707  0.1212868
+sample estimates:
+       cor 
+-0.1568036 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Турция
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a34
+t = -0.31092, df = 50, p-value = 0.7572
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3130757  0.2317500
+sample estimates:
+        cor 
+-0.04392859 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Франция
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a35
+t = 1.3446, df = 50, p-value = 0.1848
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.09071763  0.43740875
+sample estimates:
+      cor 
+0.1868075 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Чили
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a36
+t = -0.79833, df = 50, p-value = 0.4285
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3736486  0.1657881
+sample estimates:
+      cor 
+-0.112188 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Швейцария
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a37
+t = -0.77063, df = 50, p-value = 0.4446
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3702944  0.1695716
+sample estimates:
+       cor 
+-0.1083424 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Швеция
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a38
+t = -0.16791, df = 50, p-value = 0.8673
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2947301  0.2507858
+sample estimates:
+        cor 
+-0.02373919 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_ЮАР
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a39
+t = -0.83994, df = 50, p-value = 0.4049
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3786673  0.1600975
+sample estimates:
+       cor 
+-0.1179564 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Количество направлений (регулярных рейсов)
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a4
+t = 8.0102, df = 50, p-value = 1.604e-10
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.5994245 0.8489101
+sample estimates:
+      cor 
+0.7496884 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Южная Корея 
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a40
+t = -0.71922, df = 50, p-value = 0.4754
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3640383  0.1765858
+sample estimates:
+       cor 
+-0.1011909 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Япония
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a41
+t = -0.094117, df = 50, p-value = 0.9254
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2851736  0.2605376
+sample estimates:
+        cor 
+-0.01330903 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_nan
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a42
+t = NA, df = 50, p-value = NA
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ NA NA
+sample estimates:
+cor 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Alliance
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a43
+t = NA, df = 50, p-value = NA
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ NA NA
+sample estimates:
+cor 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Oneworld
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a44
+t = 0.24458, df = 50, p-value = 0.8078
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2406022  0.3045948
+sample estimates:
+      cor 
+0.0345679 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_SkyTeam
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a45
+t = 2.3013, df = 50, p-value = 0.02558
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.03994997 0.53702179
+sample estimates:
+      cor 
+0.3094763 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Star Alliance 
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a46
+t = -0.28239, df = 50, p-value = 0.7788
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3094343  0.2355619
+sample estimates:
+        cor 
+-0.03990367 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Альянс
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a47
+t = NA, df = 50, p-value = NA
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ NA NA
+sample estimates:
+cor 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_nan
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a48
+t = -1.3593, df = 50, p-value = 0.1802
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.43905866  0.08869198
+sample estimates:
+       cor 
+-0.1887775 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Пассажиро-оборот, млн. пасс-км
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a5
+t = 12.343, df = 50, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.7793487 0.9222235
+sample estimates:
+      cor 
+0.8677022 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Кол-во пассажиров, млн. чел. 
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a6
+t = 20.33, df = 50, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.9048224 0.9679162
+sample estimates:
+      cor 
+0.9445007 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Грузоперевозки, млн.т-км
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a7
+t = -0.85295, df = 50, p-value = 0.3978
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3802310  0.1583171
+sample estimates:
+       cor 
+-0.1197573 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Лет без катастроф (с 1973 г.)
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a8
+t = -1.307, df = 50, p-value = 0.1972
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.43317483  0.09589586
+sample estimates:
+       cor 
+-0.1817611 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Жертвы авиакатастроф (с 1973 г.)
+
+	Pearson's product-moment correlation
+
+data:  data\$a3 and data\$a9
+t = 1.1882, df = 50, p-value = 0.2403
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.1122570  0.4196421
+sample estimates:
+      cor 
+0.1657202 
+
+
+--------------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{cormat} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{data}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+             \PY{n}{cormat}\PY{p}{[}\PY{n}{col}\PY{p}{]} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{ro}\PY{o}{.}\PY{n}{r}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cor.test(data\PYZdl{}a3, data\PYZdl{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{col}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, method=}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{spearman}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n+nb}{list}\PY{p}{(}\PY{n}{cormat}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{*}\PY{l+m+mi}{80}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{cols}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{key}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{cormat}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{*}\PY{l+m+mi}{80}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+--------------------------------------------------------------------------------
+Год основания авиакомпании
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a0
+S = 29296, p-value = 0.07316
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.2505926 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Время существования авиакомпании (лет)
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a1
+S = 17556, p-value = 0.07316
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.2505926 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Работники (тыс. чел)
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a10
+S = 6897.2, p-value = 5.185e-09
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+     rho 
+0.705576 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Выручка (млрд. долл)
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a11
+S = 7269.9, p-value = 1.562e-08
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+     rho 
+0.689664 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Издержки (млрд. долл)
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a12
+S = 7610.3, p-value = 4.029e-08
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.6751345 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Country
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a13
+S = NA, p-value = NA
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+rho 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Австралия
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a14
+S = 25143, p-value = 0.6056
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+        rho 
+-0.07329263 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Бразилия
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a15
+S = 22661, p-value = 0.8182
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+0.03265507 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Великобритания
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a16
+S = 27652, p-value = 0.2007
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.1803773 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Германия
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a17
+S = 21865, p-value = 0.6388
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+0.06662966 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Ирландия
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a18
+S = 20257, p-value = 0.3389
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.1352853 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Испания
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a19
+S = 24410, p-value = 0.7676
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+        rho 
+-0.04198508 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Развитая
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a2
+S = 15590, p-value = 0.01536
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.3344886 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Италия
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a20
+S = 22442, p-value = 0.7676
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+0.04198508 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Канада
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a21
+S = 23114, p-value = 0.9253
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+0.01332593 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Катар
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a22
+S = 25939, p-value = 0.449
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.1072952 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Китай
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a23
+S = 18244, p-value = 0.1151
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.2211948 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Малайзия
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a24
+S = 25721, p-value = 0.4896
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.0979652 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Новая Зеландия 
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a25
+S = 28344, p-value = 0.1353
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.2099254 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Португалия
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a26
+S = 27688, p-value = 0.1967
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.1819354 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Россия
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a27
+S = 29799, p-value = 0.05107
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.2720283 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_США
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a28
+S = 11189, p-value = 7.117e-05
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.5223885 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Сауд. Аравия
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a29
+S = 23972, p-value = 0.8696
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+        rho 
+-0.02332505 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Кол-во воздушных судов, шт. 
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a3
+S = 2.6008e-12, p-value < 2.2e-16
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+rho 
+  1 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Сингапур
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a30
+S = 24628, p-value = 0.7179
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.0513151 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Страна
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a31
+S = NA, p-value = NA
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+rho 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Таиланд
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a32
+S = 25284, p-value = 0.5763
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+        rho 
+-0.07930516 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Тайвань
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a33
+S = 28889, p-value = 0.09615
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.2332038 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Турция
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a34
+S = 23535, p-value = 0.9738
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+         rho 
+-0.004665009 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Франция
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a35
+S = 18508, p-value = 0.1353
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.2099254 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Чили
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a36
+S = 27469, p-value = 0.2211
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.1726053 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Швейцария
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a37
+S = 27032, p-value = 0.2759
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.1539453 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Швеция
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a38
+S = 22224, p-value = 0.7179
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.0513151 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_ЮАР
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a39
+S = 28125, p-value = 0.1539
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.2005954 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Количество направлений (регулярных рейсов)
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a4
+S = 7082.2, p-value = 9.044e-09
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.6976774 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Южная Корея 
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a40
+S = 25455, p-value = 0.5415
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+        rho 
+-0.08661856 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Япония
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a41
+S = 20773, p-value = 0.424
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.1132704 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_nan
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a42
+S = NA, p-value = NA
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+rho 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Alliance
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a43
+S = NA, p-value = NA
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+rho 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Oneworld
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a44
+S = 23509, p-value = 0.9801
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+         rho 
+-0.003551373 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_SkyTeam
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a45
+S = 17413, p-value = 0.06623
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.2566806 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Star Alliance 
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a46
+S = 22562, p-value = 0.7952
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+0.03687592 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Альянс
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a47
+S = NA, p-value = NA
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+rho 
+ NA 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_nan
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a48
+S = 28106, p-value = 0.1556
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.1997738 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Пассажиро-оборот, млн. пасс-км
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a5
+S = 4910, p-value < 2.2e-16
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.7904038 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Кол-во пассажиров, млн. чел. 
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a6
+S = 1175.1, p-value < 2.2e-16
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.9498399 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Грузоперевозки, млн.т-км
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a7
+S = 26889, p-value = 0.2956
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.1478255 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Лет без катастроф (с 1973 г.)
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a8
+S = 28457, p-value = 0.1263
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.2147474 
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Жертвы авиакатастроф (с 1973 г.)
+
+	Spearman's rank correlation rho
+
+data:  data\$a3 and data\$a9
+S = 20485, p-value = 0.3753
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.1255239 
+
+
+--------------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{pcor} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{(}\PY{n}{ro}\PY{o}{.}\PY{n}{r}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pcor(data)\PYZdl{}estimate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{pcor}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mnogostat_1_files/mnogostat_1_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{cormat} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{cor} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{pcor}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{n}{cormat}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Partial: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{cols}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{cor}\PY{p}{)}\PY{p}{)}
+             
+         \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n+nb}{list}\PY{p}{(}\PY{n}{cormat}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{*}\PY{l+m+mi}{80}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{cormat}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pearson: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{pearson\PYZus{}cormat\PYZus{}est}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{*}\PY{l+m+mi}{80}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+--------------------------------------------------------------------------------
+Год основания авиакомпании
+
+Partial: 0.14663183592790408
+
+Pearson: -0.2910565791518727
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Время существования авиакомпании (лет)
+
+Partial: -0.1466318359298795
+
+Pearson: 0.2910565791518727
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Работники (тыс. чел)
+
+Partial: -0.43219890804946365
+
+Pearson: 0.7996415203640224
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Выручка (млрд. долл)
+
+Partial: 0.1232320861247087
+
+Pearson: 0.6507322907554649
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Издержки (млрд. долл)
+
+Partial: 0.19776626223277413
+
+Pearson: 0.6511819893630253
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Country
+
+Partial: nan
+
+Pearson: nan
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Австралия
+
+Partial: 0.5439008324728745
+
+Pearson: -0.09569828043415263
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Бразилия
+
+Partial: -0.2743979425518142
+
+Pearson: -0.03239179112662253
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Великобритания
+
+Partial: -0.39631199517269305
+
+Pearson: -0.14576559678562742
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Германия
+
+Partial: 0.5096014781776824
+
+Pearson: 0.015527204441302908
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Ирландия
+
+Partial: 0.5619561088115644
+
+Pearson: 0.07432363032478456
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Испания
+
+Partial: -0.2850286282649352
+
+Pearson: -0.05834959634453236
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Развитая
+
+Partial: 0.4132392501756838
+
+Pearson: 0.3101609207086134
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Италия
+
+Partial: 0.07792849651365573
+
+Pearson: -0.03143039093336661
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Канада
+
+Partial: -0.5127442064203358
+
+Pearson: -0.04214526919782218
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Катар
+
+Partial: -0.5043017092478751
+
+Pearson: -0.08911440252872178
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Китай
+
+Partial: -0.1317789101347356
+
+Pearson: 0.12745638460988126
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Малайзия
+
+Partial: -0.5508917655096232
+
+Pearson: -0.0852688017556981
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Новая Зеландия 
+
+Partial: 0.4067594681005189
+
+Pearson: -0.12180200909942307
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Португалия
+
+Partial: 0.1901847933164711
+
+Pearson: -0.11314940736011977
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Россия
+
+Partial: -0.42516759460079645
+
+Pearson: -0.18465058590611305
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_США
+
+Partial: -0.5541695370701234
+
+Pearson: 0.6043655300637485
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Сауд. Аравия
+
+Partial: 0.4898186154667179
+
+Pearson: -0.050658394798485
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Кол-во воздушных судов, шт. 
+
+Partial: 1.0
+
+Pearson: 1.0
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Сингапур
+
+Partial: 0.02596586189882228
+
+Pearson: -0.0602723967310442
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Страна
+
+Partial: nan
+
+Pearson: nan
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Таиланд
+
+Partial: -0.4965021207088145
+
+Pearson: -0.07950040059616259
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Тайвань
+
+Partial: 0.2342000397157452
+
+Pearson: -0.15680363940893993
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Турция
+
+Partial: 0.6128690503865318
+
+Pearson: -0.04392859344569357
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Франция
+
+Partial: 0.25959215735963453
+
+Pearson: 0.18680745293572715
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Чили
+
+Partial: 0.392557635803088
+
+Pearson: -0.11218800716686386
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Швейцария
+
+Partial: 0.1761948668224104
+
+Pearson: -0.10834240639384018
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Швеция
+
+Partial: 0.1525515118310056
+
+Pearson: -0.02373918938731925
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_ЮАР
+
+Partial: 0.018946703263343728
+
+Pearson: -0.11795640832639938
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Количество направлений (регулярных рейсов)
+
+Partial: 0.161126501777533
+
+Pearson: 0.7496884428488443
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Южная Корея 
+
+Partial: 0.582801796837711
+
+Pearson: -0.10119089697121215
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_Япония
+
+Partial: 0.3158858877686211
+
+Pearson: -0.013309032378259636
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Страна\_nan
+
+Partial: nan
+
+Pearson: nan
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Alliance
+
+Partial: nan
+
+Pearson: nan
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Oneworld
+
+Partial: -0.31039115767317677
+
+Pearson: 0.03456789832431767
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_SkyTeam
+
+Partial: 0.47365932862582755
+
+Pearson: 0.30947627130216926
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Star Alliance 
+
+Partial: -0.38390855940348406
+
+Pearson: -0.03990366567742098
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_Альянс
+
+Partial: nan
+
+Pearson: nan
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Альянс\_nan
+
+Partial: 0.5323825059349568
+
+Pearson: -0.1887775236871775
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Пассажиро-оборот, млн. пасс-км
+
+Partial: 0.564436679916233
+
+Pearson: 0.8677021865322986
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Кол-во пассажиров, млн. чел. 
+
+Partial: 0.5343692190224151
+
+Pearson: 0.9445006671921536
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Грузоперевозки, млн.т-км
+
+Partial: 0.11024161629471577
+
+Pearson: -0.11975726339661222
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Лет без катастроф (с 1973 г.)
+
+Partial: 0.11116684370194113
+
+Pearson: -0.18176114615118646
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Жертвы авиакатастроф (с 1973 г.)
+
+Partial: 0.21242376637340596
+
+Pearson: 0.16572016125019973
+--------------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
